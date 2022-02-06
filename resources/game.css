@@ -1,0 +1,12 @@
+.title{
+    text-align: center;
+}
+
+.chess{
+    width: 450px;
+    height: 450px;
+    display: block; /*变成块级元素*/
+    margin: 50px auto;
+    box-shadow: 5px 5px 10px #b9b9b9;
+
+}
