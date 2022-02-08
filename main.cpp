@@ -32,9 +32,7 @@ void addsig(int sig, void(handler)(int))
 int main(int argc, char *argv[])
 {
 
-    //初始化日志
-    // Log::get_instance()->init("./ServerLog", 0, 2000, 800000, 800);
-    Log::get_instance()->init("./ServerLog", 0, 2000, 800000, 0);
+    Log::get_instance()->init("./ServerLog", 0, 2000, 800000, 0); //初始化日志
 
     if (argc <= 1)
     {

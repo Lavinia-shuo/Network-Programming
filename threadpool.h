@@ -22,8 +22,7 @@ private:
 private:
     int m_thread_number; // 线程的数量
 
-    ，
-        pthread_t *m_threads; //线程池大小
+    pthread_t *m_threads; //线程池大小
 
     int m_max_requests; // 请求队列中最多允许的、等待处理的请求的数量
 
