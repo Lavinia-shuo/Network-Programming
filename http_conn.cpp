@@ -20,8 +20,7 @@ int setnonblocking(int fd)
     return old_option;
 }
 
-// 向epoll中添加需要监听的文件描述符
-void addfd(int epollfd, int fd, bool one_shot)
+void addfd(int epollfd, int fd, bool one_shot) //添加需要监听的cfd
 {
     epoll_event event;
     event.data.fd = fd;
@@ -68,7 +67,6 @@ void http_conn::close_conn()
     }
 }
 
-// 初始化连接,外部调用初始化套接字地址
 void http_conn::init(int sockfd, const sockaddr_in &addr)
 {
     m_sockfd = sockfd;
@@ -77,7 +75,7 @@ void http_conn::init(int sockfd, const sockaddr_in &addr)
     // 端口复用
     int reuse = 1;
     setsockopt(m_sockfd, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
-    addfd(m_epollfd, sockfd, true);
+    addfd(m_epollfd, sockfd, true); //添加需要监听的cfd
     m_user_count++;
     init();
 }
@@ -204,9 +202,7 @@ http_conn::HTTP_CODE http_conn::parse_request_line(char *text)
     {
         return BAD_REQUEST;
     }
-    /**
-     * http://192.168.110.129:10000/index.html
-    */
+
     if (strncasecmp(m_url, "http://", 7) == 0)
     {
         m_url += 7;

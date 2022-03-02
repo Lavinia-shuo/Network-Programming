@@ -19,10 +19,9 @@ private:
     static void *worker(void *arg);
     void run();
 
-private:
     int m_thread_number; // 线程的数量
 
-    pthread_t *m_threads; //线程池大小
+    pthread_t *m_threads;
 
     int m_max_requests; // 请求队列中最多允许的、等待处理的请求的数量
 
@@ -36,8 +35,7 @@ private:
 };
 
 template <typename T>
-threadpool<T>::threadpool(int thread_number, int max_requests) : m_thread_number(thread_number), m_max_requests(max_requests),
-                                                                 m_stop(false), m_threads(NULL)
+threadpool<T>::threadpool(int thread_number, int max_requests) : m_thread_number(thread_number), m_max_requests(max_requests), m_stop(false), m_threads(NULL)
 {
 
     if ((thread_number <= 0) || (max_requests <= 0))
@@ -86,7 +84,7 @@ bool threadpool<T>::append(T *request)
     }
     m_workqueue.push_back(request);
     m_queuelocker.unlock();
-    m_queuestat.post();
+    m_queuestat.post(); //告诉消费者可以消费
     return true;
 }
 
