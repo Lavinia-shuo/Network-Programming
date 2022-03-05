@@ -20,7 +20,7 @@ int setnonblocking(int fd)
     return old_option;
 }
 
-void addfd(int epollfd, int fd, bool one_shot) //添加需要监听的cfd
+void addfd(int epollfd, int fd, bool one_shot) //向红黑树中添加需要监听的cfd
 {
     epoll_event event;
     event.data.fd = fd;
@@ -35,8 +35,7 @@ void addfd(int epollfd, int fd, bool one_shot) //添加需要监听的cfd
     setnonblocking(fd);
 }
 
-// 从epoll中移除监听的文件描述符
-void removefd(int epollfd, int fd)
+void removefd(int epollfd, int fd) // 移除监听的文件描述符
 {
     epoll_ctl(epollfd, EPOLL_CTL_DEL, fd, 0);
     close(fd);
@@ -336,7 +335,6 @@ http_conn::HTTP_CODE http_conn::process_read()
 // 映射到内存地址m_file_address处，并告诉调用者获取文件成功
 http_conn::HTTP_CODE http_conn::do_request()
 {
-    // "/home/nowcoder/webserver/resources"
     strcpy(m_real_file, doc_root);
     int len = strlen(doc_root);
     strncpy(m_real_file + len, m_url, FILENAME_LEN - len - 1);
