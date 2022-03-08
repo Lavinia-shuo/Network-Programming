@@ -102,7 +102,7 @@ void threadpool<T>::run()
 
     while (!m_stop)
     {
-        m_queuestat.wait();
+        m_queuestat.wait(); //调用sem_wait()，调用一次，信号量减一
         m_queuelocker.lock();
         if (m_workqueue.empty())
         {

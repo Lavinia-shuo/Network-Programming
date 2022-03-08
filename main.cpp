@@ -16,7 +16,6 @@
 #define MAX_FD 65536           // 最大的文件描述符个数
 #define MAX_EVENT_NUMBER 10000 // 监听的最大的事件数量
 
-// 添加文件描述符
 extern void addfd(int epollfd, int fd, bool one_shot);
 extern void removefd(int epollfd, int fd);
 
@@ -71,10 +70,9 @@ int main(int argc, char *argv[])
     ret = bind(listenfd, (struct sockaddr *)&address, sizeof(address));
     ret = listen(listenfd, 5);
 
-    // 创建epoll对象，和事件数组，添加
     epoll_event events[MAX_EVENT_NUMBER];
     int epollfd = epoll_create(5);
-    // 添加到epoll对象中
+
     addfd(epollfd, listenfd, false);
     http_conn::m_epollfd = epollfd;
 
@@ -127,7 +125,7 @@ int main(int argc, char *argv[])
             else if (events[i].events & EPOLLIN)
             {
 
-                if (users[sockfd].read())
+                if (users[sockfd].read()) //一次性读出所有数据
                 {
                     pool->append(users + sockfd);
                 }
@@ -139,7 +137,7 @@ int main(int argc, char *argv[])
             else if (events[i].events & EPOLLOUT)
             {
 
-                if (!users[sockfd].write())
+                if (!users[sockfd].write()) //一次性写完所有数据
                 {
                     users[sockfd].close_conn();
                 }
