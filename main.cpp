@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
             else if (events[i].events & EPOLLIN)
             {
 
-                if (users[sockfd].read()) //一次性读出所有数据
+                if (users[sockfd].read())
                 {
                     pool->append(users + sockfd);
                 }
@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
             else if (events[i].events & EPOLLOUT)
             {
 
-                if (!users[sockfd].write()) //一次性写完所有数据
+                if (!users[sockfd].write())
                 {
                     users[sockfd].close_conn();
                 }
