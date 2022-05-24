@@ -30,10 +30,19 @@ g++ *.cpp -pthread
 
 ------
 
+### Stress testing
+
+```
+webbench -c 1000 -t 30 http://139.155.69.105:10000/index.html
+```
+
+------
+
 ### Highlights
+
 :white_check_mark: 使用 Epoll 作为 IO 多路复用的实现方式，实现单线程监听多个网络连接;
 
-:white_check_mark: 使用同步 I/O 实现 Reactor 模式；
+:white_check_mark: 使用同步 I/O 实现了 Reactor 模式；
 
 :white_check_mark: 设置 Epoll 为边沿触发模式 (ET)，提高事件处理效率；
 
