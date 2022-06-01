@@ -13,8 +13,8 @@
 #include "http_conn.h"
 #include "log.h"
 
-#define MAX_FD 65536           // 最大的文件描述符个数
-#define MAX_EVENT_NUMBER 10000 // 监听的最大的事件数量
+#define MAX_FD 65536
+#define MAX_EVENT_NUMBER 10000
 
 extern void addfd(int epollfd, int fd, bool one_shot);
 extern void removefd(int epollfd, int fd);
@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
     threadpool<http_conn> *pool = NULL;
     try
     {
-        pool = new threadpool<http_conn>;
+        pool = new threadpool<http_conn>; //提前创建好
     }
     catch (...)
     {
